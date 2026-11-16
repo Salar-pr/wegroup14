@@ -1,10 +1,7 @@
-import { Outlet } from "react-router-dom";
+import type { ReactNode } from 'react';
 
-export default function DashboardLayout() {
-  return (
-    <div className="dashboard-layout">
-      {/* Add shared dashboard navigation and header here. */}
-      <Outlet />
-    </div>
-  );
+type DashboardLayoutProps = { children: ReactNode };
+
+export function DashboardLayout({ children }: DashboardLayoutProps) {
+  return <div className="dashboard-layout">{children}</div>;
 }

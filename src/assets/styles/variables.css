@@ -1,6 +1,6 @@
 :root {
   --color-primary: #2563eb;
-  --color-text: #111827;
-  --color-muted: #6b7280;
-  --radius-card: 12px;
+  --color-text: #1f2937;
+  --color-background: #ffffff;
+  --spacing-unit: 4px;
 }

@@ -1,9 +1,7 @@
-import { Outlet } from "react-router-dom";
+import type { ReactNode } from 'react';
 
-export default function MainLayout() {
-  return (
-    <main>
-      <Outlet />
-    </main>
-  );
+type MainLayoutProps = { children: ReactNode };
+
+export function MainLayout({ children }: MainLayoutProps) {
+  return <div className="main-layout">{children}</div>;
 }

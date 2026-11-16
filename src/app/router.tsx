@@ -1,20 +1,15 @@
-import { createBrowserRouter } from "react-router-dom";
-import MainLayout from "./layouts/MainLayout";
-import AuthLayout from "./layouts/AuthLayout";
-import DashboardLayout from "./layouts/DashboardLayout";
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
-// Add feature routes here as pages are implemented.
-export const router = createBrowserRouter([
-  {
-    element: <MainLayout />,
-    children: [],
-  },
-  {
-    element: <AuthLayout />,
-    children: [],
-  },
-  {
-    element: <DashboardLayout />,
-    children: [],
-  },
-]);
+function HomePage() {
+  return <main><h1>University Hub</h1><p>Frontend starter is ready.</p></main>;
+}
+
+export function Router() {
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+      </Routes>
+    </BrowserRouter>
+  );
+}
