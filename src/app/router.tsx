@@ -1,14 +1,112 @@
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { useEffect } from 'react';
+import {
+  BrowserRouter,
+  Navigate,
+  Route,
+  Routes,
+  useLocation,
+} from 'react-router-dom';
+import { DashboardLayout } from '../components/layout/DashboardLayout';
+import { FeaturePlaceholder } from '../components/common/FeaturePlaceholder';
+import { LoginPage } from '../features/auth';
+import { RequireRole } from './RequireRole';
+import { NotFoundPage } from './NotFoundPage';
+import { ROUTES, ROLE_HOME } from '../constants/routes';
+import { useAuth } from '../hooks';
 
-function HomePage() {
-  return <main><h1>University Hub</h1><p>Frontend starter is ready.</p></main>;
+/** Scroll to top on every navigation. */
+function ScrollToTop() {
+  const { pathname } = useLocation();
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+  return null;
 }
 
+/** «/» — send each role to its own home (or to /login when anonymous). */
+function RootRedirect() {
+  const { isAuthenticated, currentUser } = useAuth();
+  if (!isAuthenticated || !currentUser) {
+    return <Navigate to={ROUTES.LOGIN} replace />;
+  }
+  return <Navigate to={ROLE_HOME[currentUser.role]} replace />;
+}
+
+/**
+ * Routing contract.
+ *
+ * Every role area is a catch-all under its own base path. Until the owning
+ * feature team (Admin / Teacher / Student / Parent) ships its pages, the
+ * role area renders <FeaturePlaceholder role="…" /> so deep links never 404.
+ *
+ * Feature teams: keep your routes inside `/<role>/*` and request replacement
+ * of the placeholder in this file — see docs/INTEGRATION_CONTRACT.md.
+ */
 export function Router() {
   return (
     <BrowserRouter>
+      <ScrollToTop />
       <Routes>
-        <Route path="/" element={<HomePage />} />
+        {/* Auth */}
+        <Route path={ROUTES.LOGIN} element={<LoginPage />} />
+
+        {/* Root: role-aware redirect */}
+        <Route path="/" element={<RootRedirect />} />
+
+        {/* Admin area */}
+        <Route
+          path={`${ROUTES.ADMIN}/*`}
+          element={
+            <RequireRole role="admin">
+              <DashboardLayout />
+            </RequireRole>
+          }
+        >
+          <Route index element={<FeaturePlaceholder role="admin" />} />
+          <Route path="*" element={<FeaturePlaceholder role="admin" />} />
+        </Route>
+
+        {/* Teacher area */}
+        <Route
+          path={`${ROUTES.TEACHER}/*`}
+          element={
+            <RequireRole role="teacher">
+              <DashboardLayout />
+            </RequireRole>
+          }
+        >
+          <Route index element={<FeaturePlaceholder role="teacher" />} />
+          <Route path="*" element={<FeaturePlaceholder role="teacher" />} />
+        </Route>
+
+        {/* Student area */}
+        <Route
+          path={`${ROUTES.STUDENT}/*`}
+          element={
+            <RequireRole role="student">
+              <DashboardLayout />
+            </RequireRole>
+          }
+        >
+          <Route index element={<FeaturePlaceholder role="student" />} />
+          <Route path="*" element={<FeaturePlaceholder role="student" />} />
+        </Route>
+
+        {/* Parent area */}
+        <Route
+          path={`${ROUTES.PARENT}/*`}
+          element={
+            <RequireRole role="parent">
+              <DashboardLayout />
+            </RequireRole>
+          }
+        >
+          <Route index element={<FeaturePlaceholder role="parent" />} />
+          <Route path="*" element={<FeaturePlaceholder role="parent" />} />
+        </Route>
+
+        {/* Fallback */}
+        <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </BrowserRouter>
   );
