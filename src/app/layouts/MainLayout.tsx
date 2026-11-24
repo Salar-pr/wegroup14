@@ -1,7 +1,3 @@
-import type { ReactNode } from 'react';
-
-type MainLayoutProps = { children: ReactNode };
-
-export function MainLayout({ children }: MainLayoutProps) {
-  return <div className="main-layout">{children}</div>;
-}
+// Backwards-compatible re-export. The authenticated shell is provided by
+// `DashboardLayout`; `MainLayout` remains as an alias for existing imports.
+export { DashboardLayout as MainLayout } from '../../components/layout/DashboardLayout';

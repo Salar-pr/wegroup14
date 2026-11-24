@@ -1,7 +1,3 @@
-import type { ReactNode } from 'react';
-
-type DashboardLayoutProps = { children: ReactNode };
-
-export function DashboardLayout({ children }: DashboardLayoutProps) {
-  return <div className="dashboard-layout">{children}</div>;
-}
+// Backwards-compatible re-export. The canonical implementation lives in
+// `src/components/layout/DashboardLayout.tsx` (shared design system).
+export { DashboardLayout } from '../../components/layout/DashboardLayout';

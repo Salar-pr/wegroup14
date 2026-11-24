@@ -1,7 +1,7 @@
 {
-  "name": "university-hub",
+  "name": "school-management-system",
   "private": true,
-  "version": "0.1.0",
+  "version": "1.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -12,24 +12,29 @@
     "format:check": "prettier --check ."
   },
   "dependencies": {
-    "@tanstack/react-query": "^5.0.0",
-    "axios": "^1.7.0",
+    "@fontsource/vazirmatn": "^5.3.0",
+    "lucide-react": "^1.79.0",
     "react": "^18.3.0",
     "react-dom": "^18.3.0",
-    "react-router-dom": "^6.26.0"
+    "react-router-dom": "^6.26.0",
+    "recharts": "^3.11.1"
   },
   "devDependencies": {
     "@eslint/js": "^9.0.0",
     "@types/react": "^18.3.0",
     "@types/react-dom": "^18.3.0",
     "@vitejs/plugin-react": "^4.3.0",
+    "autoprefixer": "^10.7.0",
     "eslint": "^9.0.0",
     "eslint-plugin-react-hooks": "^5.1.0",
     "eslint-plugin-react-refresh": "^0.4.0",
     "globals": "^15.0.0",
+    "postcss": "^8.5.33",
     "prettier": "^3.3.0",
+    "tailwindcss": "^3.4.19",
     "typescript": "^5.5.0",
     "typescript-eslint": "^8.0.0",
     "vite": "^5.4.0"
-  }
+  },
+  "description": "سامانه یکپارچه مدیریت مدرسه (مدرسه‌یار) — frontend-only Persian RTL school management SaaS UI"
 }

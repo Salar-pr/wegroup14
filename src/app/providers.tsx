@@ -1,10 +1,17 @@
 import type { ReactNode } from 'react';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { AppProvider } from '../context';
+import { Toaster } from '../components/feedback/Toast';
 
-const queryClient = new QueryClient();
-
-type ProvidersProps = { children: ReactNode };
-
-export function Providers({ children }: ProvidersProps) {
-  return <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>;
+/**
+ * Application-wide providers.
+ * The app is frontend-only: there is no server, no API client and no
+ * external data service here — only the in-memory AppContext.
+ */
+export function Providers({ children }: { children: ReactNode }) {
+  return (
+    <AppProvider>
+      {children}
+      <Toaster />
+    </AppProvider>
+  );
 }
