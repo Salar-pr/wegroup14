@@ -1,11 +1,3 @@
-/**
- * Public barrel for TASK 03 — Student Dashboard (`src/features/student`).
- *
- * Supports both lazy default import (`lazy(() => import('../features/student'))`)
- * and named imports (`import { StudentApp } from '../features/student'`) per
- * `docs/INTEGRATION_CONTRACT.md` §4.1.
- */
-
 export { default, StudentApp } from './StudentApp';
 
 // Pages

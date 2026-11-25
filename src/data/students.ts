@@ -25,4 +25,5 @@ export const mockStudents: Student[] = [
   { id: 's-22', studentCode: '14021022', name: 'سروش بهرامی', classId: 'c-06', gradeLevel: 'دوازدهم', field: 'انسانی', phone: '09191111022', guardianName: 'مریم بهرامی', guardianPhone: '09121120022', status: 'active', gpa: 15.9, enrolledAt: '2024-09-21', avatarColor: '#0EA5E9' },
   { id: 's-23', studentCode: '14021023', name: 'غزل طاهری', classId: 'c-06', gradeLevel: 'دوازدهم', field: 'انسانی', phone: '09191111023', guardianName: 'فرهاد طاهری', guardianPhone: '09121120023', status: 'active', gpa: 17.45, enrolledAt: '2024-09-21', avatarColor: '#16A34A' },
   { id: 's-24', studentCode: '14021024', name: 'رایان ملکی', classId: 'c-06', gradeLevel: 'دوازدهم', field: 'انسانی', phone: '09191111024', guardianName: 'سمیرا ملکی', guardianPhone: '09121120024', status: 'active', gpa: 12.4, enrolledAt: '2024-09-21', avatarColor: '#7C3AED' },
+  { id: 's-25', studentCode: '14021025', name: 'علی محمدی', classId: 'c-01', gradeLevel: 'دهم', field: 'ریاضی', phone: '09191111025', guardianName: 'زهرا کریمی', guardianPhone: '09121120001', status: 'active', gpa: 16.1, enrolledAt: '2026-09-21', avatarColor: '#0EA5E9' },
 ];

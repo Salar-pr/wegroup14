@@ -37,4 +37,7 @@ export const mockGrades: Grade[] = [
   { id: 'g-34', studentId: 's-12', subjectId: 'sub-06', classId: 'c-03', teacherId: 't-07', title: 'آزمون کلاسی ۱', type: 'quiz', score: 10.5, maxScore: 20, date: '2026-10-07' },
   { id: 'g-35', studentId: 's-12', subjectId: 'sub-01', classId: 'c-03', teacherId: 't-01', title: 'تکلیف فصل ۱', type: 'assignment', score: 9.25, maxScore: 20, date: '2026-10-18' },
   { id: 'g-36', studentId: 's-12', subjectId: 'sub-06', classId: 'c-03', teacherId: 't-07', title: 'میان‌ترم', type: 'midterm', score: 11, maxScore: 20, date: '2026-11-04' },
+  { id: 'g-37', studentId: 's-25', subjectId: 'sub-01', classId: 'c-01', teacherId: 't-01', title: 'آزمون کلاسی ۱', type: 'quiz', score: 16.5, maxScore: 20, date: '2026-10-07' },
+  { id: 'g-38', studentId: 's-25', subjectId: 'sub-03', classId: 'c-01', teacherId: 't-03', title: 'میان‌ترم', type: 'midterm', score: 17.25, maxScore: 20, date: '2026-11-04' },
+  { id: 'g-39', studentId: 's-25', subjectId: 'sub-06', classId: 'c-01', teacherId: 't-07', title: 'تکلیف فصل ۱', type: 'assignment', score: 14.5, maxScore: 20, date: '2026-10-18' },
 ];

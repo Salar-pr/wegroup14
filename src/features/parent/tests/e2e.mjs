@@ -11,7 +11,7 @@ import { chromium } from 'playwright';
 import fs from 'node:fs';
 
 const BASE = process.env.BASE_URL ?? 'http://localhost:5173';
-const OUT = '/home/user/notes/shots';
+const OUT = process.env.SHOTS_DIR ?? 'artifacts/parent-shots';
 fs.mkdirSync(OUT, { recursive: true });
 
 const results = [];

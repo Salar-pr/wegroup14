@@ -6,16 +6,6 @@ export type LoginResult =
   | { ok: true; user: User }
   | { ok: false; error: string };
 
-/**
- * The single shared application context.
- *
- * Contract for feature teams (do not change without the team lead):
- * - Auth:    currentUser, isAuthenticated, login, loginAsRole, logout, hasRole
- * - Data:    db (live in-memory collections), updateEntity, resetDemoData
- * - Toasts:  toasts, showToast, dismissToast
- * - Shell:   sidebarOpen / toggleSidebar / closeSidebar (mobile drawer),
- *            sidebarCollapsed / toggleSidebarCollapsed (desktop rail)
- */
 export interface AppContextValue {
   // ---- Auth ----
   currentUser: User | null;

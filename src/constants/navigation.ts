@@ -20,14 +20,7 @@ import {
 import type { UserRole } from '../types';
 import { ROLE_HOME } from './routes';
 
-/**
- * Sidebar navigation contract.
- *
- * `path` is RELATIVE to the role home (e.g. '/students' for the admin).
- * Feature teams must register their pages under `<ROLE_HOME[role]><path>`.
- * Every path below is guaranteed to render (placeholder until the owning
- * feature team replaces it), so sidebar links never dead-end.
- */
+// Paths are relative to each role's home route.
 export interface NavItem {
   label: string;
   path: string;
@@ -66,7 +59,7 @@ const ALL_ITEMS: NavItem[] = [
   { label: 'کلاس‌های من', path: '/my-classes', icon: School, roles: ['teacher'] },
   { label: 'نمرات', path: '/grades', icon: ClipboardList, roles: ['admin', 'teacher', 'student', 'parent'] },
   { label: 'حضور و غیاب', path: '/attendance', icon: ClipboardCheck, roles: ['admin', 'teacher', 'student', 'parent'] },
-  { label: 'تکالیف', path: '/homework', icon: NotebookPen, roles: ['teacher', 'student'] },
+  { label: 'تکالیف', path: '/homework', icon: NotebookPen, roles: ['teacher', 'student', 'parent'] },
   { label: 'کارنامه', path: '/report-card', icon: FileText, roles: ['student'] },
   { label: 'برنامه کلاسی', path: '/schedule', icon: CalendarDays, roles: ['admin', 'teacher', 'student', 'parent'] },
 

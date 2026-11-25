@@ -52,7 +52,7 @@ const DEFAULT_PROFILE: SchoolProfile = {
   name: 'دبیرستان دوره دوم مدرسه‌یار',
   motto: 'دانش، اخلاق، آینده',
   principal: 'مدیر مدرسه',
-  academicYear: '۱۴۰۴ - ۱۴۰۵',
+  academicYear: '۱۴۰۵ - ۱۴۰۶',
   phone: '021-88776655',
   email: 'info@school.ir',
   website: 'school.ir',

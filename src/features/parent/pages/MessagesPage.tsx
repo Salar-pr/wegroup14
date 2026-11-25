@@ -57,7 +57,7 @@ export default function MessagesPage() {
   const [aboutStudentId, setAboutStudentId] = useState<string>(child?.id ?? '');
   const [errors, setErrors] = useState<{ subject?: string; body?: string }>({});
 
-  const myId = currentUser?.id ?? 'u-parent';
+  const myId = currentUser?.id ?? '';
 
   /** Messages I sent or received (db + this session's sent list, de-duplicated). */
   const allMessages = useMemo(() => {

@@ -32,7 +32,7 @@ export default function MessagesPage() {
   const [body, setBody] = useState('');
   const [formError, setFormError] = useState<string | undefined>();
 
-  const userId = currentUser?.id ?? 'u-student';
+  const userId = currentUser?.id ?? '';
 
   const userMessages = useMemo(() => {
     return db.messages

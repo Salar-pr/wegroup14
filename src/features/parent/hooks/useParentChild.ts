@@ -46,8 +46,6 @@ export function useParentChild(): ParentScope {
   const { db } = useData();
   const { selectedChildId, completedHomeworkIds, childIds } = useParentSession();
 
-  // `childIds` is the session-level list (account links + any seeded demo
-  // sibling), so every page sees exactly the same set of children.
   const children = useMemo(() => getChildren(db, childIds), [db, childIds]);
 
   const child = useMemo(() => {

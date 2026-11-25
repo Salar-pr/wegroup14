@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { CalendarCheck2, GraduationCap, MessageSquare, NotebookPen, Wallet } from 'lucide-react';
-import { useData } from '../../../hooks';
+import { useAuth, useData } from '../../../hooks';
 import { cn, toPersianDigits } from '../../../utils';
 import { ROUTES } from '../../../constants';
 import { useParentChild } from '../hooks/useParentChild';
@@ -21,13 +21,14 @@ const QUICK_LINKS = [
  * Keeps the child selection visible and switchable from anywhere.
  */
 export function ParentTopbar() {
+  const { currentUser } = useAuth();
   const { db } = useData();
   const { children, child, academic, attendance, finance } = useParentChild();
 
   if (!child || !academic || !attendance || !finance) return null;
 
   const unread = db.messages.filter(
-    (message) => message.to.id === 'u-parent' && !message.read,
+    (message) => message.to.id === currentUser?.id && !message.read,
   ).length;
 
   return (

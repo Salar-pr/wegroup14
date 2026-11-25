@@ -29,4 +29,12 @@ export const mockAttendance: Attendance[] = [
   { id: 'att-26', studentId: 's-21', classId: 'c-06', subjectId: 'sub-06', date: '2026-11-17', status: 'present' },
   { id: 'att-27', studentId: 's-23', classId: 'c-06', subjectId: 'sub-06', date: '2026-11-18', status: 'present' },
   { id: 'att-28', studentId: 's-24', classId: 'c-06', subjectId: 'sub-06', date: '2026-11-22', status: 'absent', note: 'غیبت بدون اطلاع قبلی' },
+  { id: 'att-29', studentId: 's-25', classId: 'c-01', subjectId: 'sub-01', date: '2026-11-15', status: 'present' },
+  { id: 'att-30', studentId: 's-25', classId: 'c-01', subjectId: 'sub-03', date: '2026-11-16', status: 'present' },
+  { id: 'att-31', studentId: 's-25', classId: 'c-01', subjectId: 'sub-06', date: '2026-11-17', status: 'present' },
+  { id: 'att-32', studentId: 's-25', classId: 'c-01', subjectId: 'sub-01', date: '2026-11-18', status: 'absent', note: 'غیبت بدون اطلاع قبلی' },
+  { id: 'att-33', studentId: 's-25', classId: 'c-01', subjectId: 'sub-05', date: '2026-11-22', status: 'late', note: 'تأخیر ۱۵ دقیقه‌ای' },
+  { id: 'att-34', studentId: 's-12', classId: 'c-03', subjectId: 'sub-02', date: '2026-11-16', status: 'late', note: 'ورود بعد از زنگ اول' },
+  { id: 'att-35', studentId: 's-12', classId: 'c-03', subjectId: 'sub-03', date: '2026-11-19', status: 'absent', note: 'نیاز به پیگیری با خانواده' },
+  { id: 'att-36', studentId: 's-12', classId: 'c-03', subjectId: 'sub-02', date: '2026-11-22', status: 'present' },
 ];

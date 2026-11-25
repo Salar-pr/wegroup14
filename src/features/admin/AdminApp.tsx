@@ -1,14 +1,5 @@
-/**
- * Admin feature — route table for the school administration area.
- *
- * Mounted by the app router under `/admin/*`. Paths mirror
- * `buildNavigation('admin')` from `src/constants/navigation.ts` so every
- * sidebar link resolves. Sections that belong to other teams' tasks
- * (parents, payroll, reports, schedule, messages) render an informative
- * notice instead of a dead link.
- */
 import { Navigate, Route, Routes } from 'react-router-dom';
-import { Construction, Mail, type LucideIcon } from 'lucide-react';
+import { Construction, type LucideIcon } from 'lucide-react';
 import { PageHeader } from '../../components';
 import DashboardPage from './pages/DashboardPage';
 import StudentsPage from './pages/StudentsPage';
@@ -20,6 +11,8 @@ import HomeworkPage from './pages/HomeworkPage';
 import AnnouncementsPage from './pages/AnnouncementsPage';
 import FinancePage from './pages/FinancePage';
 import SettingsPage from './pages/SettingsPage';
+import ParentsPage from './pages/ParentsPage';
+import MessagesPage from './pages/MessagesPage';
 
 interface DeferredProps {
   title: string;
@@ -27,7 +20,6 @@ interface DeferredProps {
   icon: LucideIcon;
 }
 
-/** Shown for admin sections owned by other feature tasks. */
 function DeferredSection({ title, description, icon: Icon }: DeferredProps) {
   return (
     <>
@@ -40,10 +32,9 @@ function DeferredSection({ title, description, icon: Icon }: DeferredProps) {
         <span className="mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-blue-50 text-primary">
           <Icon size={26} aria-hidden="true" />
         </span>
-        <h2 className="text-[16px] font-extrabold text-text">این بخش در وظایف این نسخه نیست</h2>
+        <h2 className="text-[16px] font-extrabold text-text">این صفحه هنوز آماده نیست</h2>
         <p className="mt-2 max-w-md text-[13px] leading-6 text-text-muted">
-          {description} لینک این بخش در منوی اصلی باقی مانده تا ناوبری کامل بماند؛ محتوای آن توسط
-          تیم مربوطه در نسخه‌های بعدی تکمیل می‌شود.
+          {description} طراحی این قسمت در نسخه فعلی انجام نشده است.
         </p>
       </div>
     </>
@@ -67,18 +58,10 @@ export function AdminApp() {
       <Route path="payments" element={<FinancePage />} />
       <Route path="finance" element={<Navigate to="/admin/payments" replace />} />
       <Route path="settings" element={<SettingsPage />} />
+      <Route path="parents" element={<ParentsPage />} />
+      <Route path="messages" element={<MessagesPage />} />
 
-      {/* Sections owned by other feature teams (kept working, not dead links). */}
-      <Route
-        path="parents"
-        element={
-          <DeferredSection
-            title="اولیا"
-            description="مدیریت پرونده اولیا و ارتباط با خانواده‌ها."
-            icon={Mail}
-          />
-        }
-      />
+      {/* These sections do not have a design yet. */}
       <Route
         path="payroll"
         element={
@@ -109,18 +92,6 @@ export function AdminApp() {
           />
         }
       />
-      <Route
-        path="messages"
-        element={
-          <DeferredSection
-            title="پیام‌ها"
-            description="پیام‌رسانی داخلی میان مدیر، معلمان و اولیا."
-            icon={Mail}
-          />
-        }
-      />
-
-      {/* Unknown admin path → back to the dashboard instead of a blank page. */}
       <Route path="*" element={<Navigate to="/admin" replace />} />
     </Routes>
   );
