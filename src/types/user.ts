@@ -29,4 +29,5 @@ export interface User {
 export interface DemoAccount {
   user: User;
   password: string;
+  scenario?: string;
 }

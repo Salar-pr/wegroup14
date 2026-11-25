@@ -1,14 +1,4 @@
-/**
- * Admin feature barrel — the single public entry point of TASK 02.
- *
- * Integration (see docs/INTEGRATION_CONTRACT.md §4.1):
- *   import { AdminApp } from '../features/admin';
- *   …
- *   <Route path={`${ROUTES.ADMIN}/*`} element={<RequireRole role="admin"><DashboardLayout /></RequireRole>}>
- *     <Route path="*" element={<AdminApp />} />
- *   </Route>
- */
-export { AdminApp } from './AdminApp';
+export { AdminApp, AdminApp as default } from './AdminApp';
 
 /* Pages — exported for reuse / testing */
 export { default as AdminDashboardPage } from './pages/DashboardPage';
@@ -21,6 +11,8 @@ export { default as AdminHomeworkPage } from './pages/HomeworkPage';
 export { default as AdminAnnouncementsPage } from './pages/AnnouncementsPage';
 export { default as AdminFinancePage } from './pages/FinancePage';
 export { default as AdminSettingsPage } from './pages/SettingsPage';
+export { default as AdminParentsPage } from './pages/ParentsPage';
+export { default as AdminMessagesPage } from './pages/MessagesPage';
 
 /* Reusable feature components */
 export { ChartCard } from './components/ChartCard';

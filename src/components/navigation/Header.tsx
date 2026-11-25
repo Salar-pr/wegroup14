@@ -101,6 +101,8 @@ export function Header() {
     const q = trimmedQuery.toLowerCase();
     const results: EntitySearchResult[] = [];
     for (const student of db.students) {
+      if (currentUser?.role === 'parent' && !currentUser.studentIds?.includes(student.id)) continue;
+      if (currentUser?.role === 'student' && student.phone !== currentUser.phone) continue;
       if (student.name.includes(trimmedQuery) || student.studentCode.includes(q)) {
         results.push({ kind: 'student', id: student.id });
       }
@@ -110,13 +112,13 @@ export function Header() {
         results.push({ kind: 'teacher', id: teacher.id });
       }
     }
-    for (const announcement of db.announcements) {
+    for (const announcement of roleAnnouncements) {
       if (announcement.title.includes(trimmedQuery)) {
         results.push({ kind: 'announcement', id: announcement.id });
       }
     }
     return results.slice(0, 7);
-  }, [db.students, db.teachers, db.announcements, trimmedQuery]);
+  }, [db.students, db.teachers, roleAnnouncements, trimmedQuery, currentUser]);
 
   if (!currentUser) return null;
 

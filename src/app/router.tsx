@@ -1,11 +1,5 @@
-import { useEffect } from 'react';
-import {
-  BrowserRouter,
-  Navigate,
-  Route,
-  Routes,
-  useLocation,
-} from 'react-router-dom';
+import { lazy, Suspense, useEffect } from 'react';
+import { BrowserRouter, Navigate, Route, Routes, useLocation } from 'react-router-dom';
 import { DashboardLayout } from '../components/layout/DashboardLayout';
 import { FeaturePlaceholder } from '../components/common/FeaturePlaceholder';
 import { LoginPage } from '../features/auth';
@@ -14,7 +8,18 @@ import { NotFoundPage } from './NotFoundPage';
 import { ROUTES, ROLE_HOME } from '../constants/routes';
 import { useAuth } from '../hooks';
 
-/** Scroll to top on every navigation. */
+const AdminApp = lazy(() => import('../features/admin'));
+const StudentApp = lazy(() => import('../features/student'));
+const ParentApp = lazy(() => import('../features/parent'));
+
+function FeatureFallback() {
+  return (
+    <div className="flex min-h-[60vh] items-center justify-center">
+      <p className="text-[13px] text-text-muted">در حال بارگذاری…</p>
+    </div>
+  );
+}
+
 function ScrollToTop() {
   const { pathname } = useLocation();
   useEffect(() => {
@@ -23,7 +28,6 @@ function ScrollToTop() {
   return null;
 }
 
-/** «/» — send each role to its own home (or to /login when anonymous). */
 function RootRedirect() {
   const { isAuthenticated, currentUser } = useAuth();
   if (!isAuthenticated || !currentUser) {
@@ -32,16 +36,6 @@ function RootRedirect() {
   return <Navigate to={ROLE_HOME[currentUser.role]} replace />;
 }
 
-/**
- * Routing contract.
- *
- * Every role area is a catch-all under its own base path. Until the owning
- * feature team (Admin / Teacher / Student / Parent) ships its pages, the
- * role area renders <FeaturePlaceholder role="…" /> so deep links never 404.
- *
- * Feature teams: keep your routes inside `/<role>/*` and request replacement
- * of the placeholder in this file — see docs/INTEGRATION_CONTRACT.md.
- */
 export function Router() {
   return (
     <BrowserRouter>
@@ -62,8 +56,14 @@ export function Router() {
             </RequireRole>
           }
         >
-          <Route index element={<FeaturePlaceholder role="admin" />} />
-          <Route path="*" element={<FeaturePlaceholder role="admin" />} />
+          <Route
+            path="*"
+            element={
+              <Suspense fallback={<FeatureFallback />}>
+                <AdminApp />
+              </Suspense>
+            }
+          />
         </Route>
 
         {/* Teacher area */}
@@ -88,8 +88,14 @@ export function Router() {
             </RequireRole>
           }
         >
-          <Route index element={<FeaturePlaceholder role="student" />} />
-          <Route path="*" element={<FeaturePlaceholder role="student" />} />
+          <Route
+            path="*"
+            element={
+              <Suspense fallback={<FeatureFallback />}>
+                <StudentApp />
+              </Suspense>
+            }
+          />
         </Route>
 
         {/* Parent area */}
@@ -101,8 +107,14 @@ export function Router() {
             </RequireRole>
           }
         >
-          <Route index element={<FeaturePlaceholder role="parent" />} />
-          <Route path="*" element={<FeaturePlaceholder role="parent" />} />
+          <Route
+            path="*"
+            element={
+              <Suspense fallback={<FeatureFallback />}>
+                <ParentApp />
+              </Suspense>
+            }
+          />
         </Route>
 
         {/* Fallback */}

@@ -1,7 +1,7 @@
 import type { Parent } from '../types';
 
 export const mockParents: Parent[] = [
-  { id: 'p-01', name: 'زهرا کریمی', phone: '09121120001', relation: 'mother', occupation: 'خانه‌دار', studentIds: ['s-01'], registeredAt: '2026-09-21', avatarColor: '#F59E0B' },
+  { id: 'p-01', name: 'زهرا کریمی', phone: '09121120001', relation: 'mother', occupation: 'خانه‌دار', studentIds: ['s-01', 's-25'], registeredAt: '2026-09-21', avatarColor: '#F59E0B' },
   { id: 'p-02', name: 'حسن رضایی', phone: '09121120002', relation: 'father', occupation: 'مهندس عمران', studentIds: ['s-02'], registeredAt: '2026-09-21', avatarColor: '#2563EB' },
   { id: 'p-03', name: 'فاطمه حسینی', phone: '09121120003', relation: 'mother', occupation: 'حسابدار', studentIds: ['s-03'], registeredAt: '2026-09-21', avatarColor: '#DB2777' },
   { id: 'p-04', name: 'محمد نوری', phone: '09121120004', relation: 'father', occupation: 'کارمند بانک', studentIds: ['s-04'], registeredAt: '2026-09-21', avatarColor: '#0EA5E9' },

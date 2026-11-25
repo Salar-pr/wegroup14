@@ -12,22 +12,6 @@ import ProfilePage from './pages/ProfilePage';
 import ReportCardPage from './pages/ReportCardPage';
 import SchedulePage from './pages/SchedulePage';
 
-/**
- * Student Dashboard feature router (`src/features/student/`).
- *
- * Mounted under `/student/*` via `<Route path="*" element={<StudentApp />} />`.
- * Covers all required TASK 03 pages plus every sidebar link from
- * `buildNavigation('student')`:
- *   /student                  → DashboardPage
- *   /student/schedule         → SchedulePage
- *   /student/grades           → GradesPage
- *   /student/attendance       → AttendancePage
- *   /student/homework         → HomeworkPage
- *   /student/announcements    → AnnouncementsPage
- *   /student/profile          → ProfilePage
- *   /student/report-card      → ReportCardPage (sidebar item)
- *   /student/messages         → MessagesPage   (sidebar item)
- */
 export function StudentApp() {
   return (
     <StudentSessionProvider>

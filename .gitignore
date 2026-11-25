@@ -29,6 +29,7 @@ Thumbs.db
 
 # Test and coverage
 coverage/
+artifacts/
 
 # Local caches
 .vite/

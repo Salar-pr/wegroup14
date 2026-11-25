@@ -14,40 +14,40 @@ import { AuthLayout } from '../../app/layouts/AuthLayout';
 import { Avatar, Badge, Button, Input } from '../../components';
 import { ROLES } from '../../constants/roles';
 import { ROLE_HOME } from '../../constants/routes';
-import { getDemoAccountByRole } from '../../data';
+import { demoAccounts, getDemoAccountByRole } from '../../data';
 import { useAuth, useToast } from '../../hooks';
 import { cn, isValidEmail, isValidPassword } from '../../utils';
 import type { UserRole } from '../../types';
 
 export default function LoginPage() {
-  const { isAuthenticated, currentUser, login, loginAsRole } = useAuth();
+  const { isAuthenticated, currentUser, login } = useAuth();
   const { showToast } = useToast();
   const navigate = useNavigate();
 
-  const [selectedRole, setSelectedRole] = useState<UserRole>('admin');
-  const [email, setEmail] = useState('admin@school.ir');
-  const [password, setPassword] = useState('admin123');
+  const [demoId, setDemoId] = useState('u-admin');
+  const selectedAccount =
+    demoAccounts.find((acct) => acct.user.id === demoId) ?? getDemoAccountByRole('admin');
+  const selectedRole = selectedAccount.user.role;
+  const roleDemos = demoAccounts.filter((acct) => acct.user.role === selectedRole);
+  const [email, setEmail] = useState(() => getDemoAccountByRole('admin').user.email);
+  const [password, setPassword] = useState(() => getDemoAccountByRole('admin').password);
   const [showPassword, setShowPassword] = useState(false);
   const [fieldErrors, setFieldErrors] = useState<{ email?: string; password?: string }>({});
   const [formError, setFormError] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [demoLoadingRole, setDemoLoadingRole] = useState<UserRole | null>(null);
 
-  // Keep the form in sync with the selected role's demo credentials (demo convenience)
   useEffect(() => {
-    const account = getDemoAccountByRole(selectedRole);
-    setEmail(account.user.email);
-    setPassword(account.password);
+    setEmail(selectedAccount.user.email);
+    setPassword(selectedAccount.password);
     setFieldErrors({});
     setFormError(null);
-  }, [selectedRole]);
+  }, [selectedAccount]);
 
   // Already signed in? Go straight to the role home.
   if (isAuthenticated && currentUser) {
     return <Navigate to={ROLE_HOME[currentUser.role]} replace />;
   }
-
-  const selectedAccount = getDemoAccountByRole(selectedRole);
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -76,12 +76,16 @@ export default function LoginPage() {
     navigate(ROLE_HOME[result.user.role], { replace: true });
   };
 
-  const handleDemoLogin = async (role: UserRole) => {
-    setDemoLoadingRole(role);
+  const handleDemoLogin = async () => {
+    setDemoLoadingRole(selectedRole);
     try {
-      const user = await loginAsRole(role);
-      showToast('success', `خوش آمدید، ${user.name} عزیز!`, 'ورود با حساب نمایشی');
-      navigate(ROLE_HOME[user.role], { replace: true });
+      const result = await login(selectedAccount.user.email, selectedAccount.password);
+      if (!result.ok) {
+        showToast('error', result.error, 'ورود ناموفق');
+        return;
+      }
+      showToast('success', `خوش آمدید، ${result.user.name} عزیز!`, 'ورود با حساب نمایشی');
+      navigate(ROLE_HOME[result.user.role], { replace: true });
     } finally {
       setDemoLoadingRole(null);
     }
@@ -123,7 +127,8 @@ export default function LoginPage() {
                 <button
                   key={role.id}
                   type="button"
-                  onClick={() => setSelectedRole(role.id)}
+                  onClick={() => setDemoId(getDemoAccountByRole(role.id).user.id)}
+                  disabled={isSubmitting || demoLoadingRole !== null}
                   aria-pressed={selected}
                   className={cn(
                     'relative flex flex-col items-start gap-1.5 rounded-card border p-2.5 text-start transition-all duration-150',
@@ -148,9 +153,7 @@ export default function LoginPage() {
                     <Icon size={18} aria-hidden="true" />
                   </span>
                   <span>
-                    <span className="block text-[13px] font-extrabold text-text">
-                      {role.label}
-                    </span>
+                    <span className="block text-[13px] font-extrabold text-text">{role.label}</span>
                     <span className="mt-0.5 block text-[9px] leading-4 text-text-muted">
                       {role.description}
                     </span>
@@ -161,7 +164,34 @@ export default function LoginPage() {
           </div>
         </fieldset>
 
-        {/* ---------- Demo account quick-login ---------- */}
+        {roleDemos.length > 1 && (
+          <fieldset className="mt-3">
+            <legend className="mb-2 text-[12px] font-bold text-text">حساب نمایشی</legend>
+            <div className="grid grid-cols-2 gap-2">
+              {roleDemos.map((acct) => (
+                <button
+                  key={acct.user.id}
+                  type="button"
+                  aria-pressed={demoId === acct.user.id}
+                  onClick={() => setDemoId(acct.user.id)}
+                  disabled={isSubmitting || demoLoadingRole !== null}
+                  className={cn(
+                    'rounded-btn border p-2.5 text-start transition-colors disabled:opacity-60',
+                    demoId === acct.user.id
+                      ? 'border-primary bg-blue-50 text-primary'
+                      : 'border-border text-text hover:border-primary',
+                  )}
+                >
+                  <span className="block text-[12px] font-bold">{acct.user.name}</span>
+                  <span className="mt-0.5 block text-[10px] leading-5 text-text-muted">
+                    {acct.scenario}
+                  </span>
+                </button>
+              ))}
+            </div>
+          </fieldset>
+        )}
+
         <div
           key={selectedRole}
           className="mt-3 rounded-card border border-dashed border-blue-200 bg-blue-50/50 p-2.5"
@@ -199,7 +229,7 @@ export default function LoginPage() {
             className="mt-2.5 border border-blue-100 bg-white text-primary hover:bg-blue-50"
             isLoading={demoLoadingRole === selectedRole}
             disabled={isSubmitting || demoLoadingRole !== null}
-            onClick={() => void handleDemoLogin(selectedRole)}
+            onClick={() => void handleDemoLogin()}
             leftIcon={GraduationCap}
           >
             ورود با حساب نمایشی
@@ -281,7 +311,11 @@ export default function LoginPage() {
             <button
               type="button"
               onClick={() =>
-                showToast('info', 'برای بازیابی رمز عبور با دفتر مدرسه تماس بگیرید.', 'بازیابی رمز عبور')
+                showToast(
+                  'info',
+                  'برای بازیابی رمز عبور با دفتر مدرسه تماس بگیرید.',
+                  'بازیابی رمز عبور',
+                )
               }
               className="text-[11px] font-bold text-primary transition-colors hover:text-primary-dark"
             >
