@@ -256,7 +256,7 @@ export default function GradesPage() {
           {progress.length === 0 ? (
             <EmptyState icon={TrendingUp} title="داده‌ای برای نمودار وجود ندارد" />
           ) : (
-            <GradeProgressChart points={progress} />
+            <GradeProgressChart points={progress} height={300} />
           )}
         </SectionCard>
 
