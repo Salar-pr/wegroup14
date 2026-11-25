@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { lazy, Suspense, useEffect } from 'react';
 import {
   BrowserRouter,
   Navigate,
@@ -13,6 +13,17 @@ import { RequireRole } from './RequireRole';
 import { NotFoundPage } from './NotFoundPage';
 import { ROUTES, ROLE_HOME } from '../constants/routes';
 import { useAuth } from '../hooks';
+
+/** Parent feature (UH-04) is code-split so its charts never block other roles. */
+const ParentApp = lazy(() => import('../features/parent'));
+
+function FeatureFallback() {
+  return (
+    <div className="flex min-h-[60vh] items-center justify-center">
+      <p className="text-[13px] text-text-muted">در حال بارگذاری…</p>
+    </div>
+  );
+}
 
 /** Scroll to top on every navigation. */
 function ScrollToTop() {
@@ -101,8 +112,15 @@ export function Router() {
             </RequireRole>
           }
         >
-          <Route index element={<FeaturePlaceholder role="parent" />} />
-          <Route path="*" element={<FeaturePlaceholder role="parent" />} />
+          {/* Parent feature (UH-04) owns every path under /parent/* */}
+          <Route
+            path="*"
+            element={
+              <Suspense fallback={<FeatureFallback />}>
+                <ParentApp />
+              </Suspense>
+            }
+          />
         </Route>
 
         {/* Fallback */}
